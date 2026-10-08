@@ -72,8 +72,8 @@ a { color: var(--navy); }
 .topbar strong { color: var(--navy); font-size: 1.25rem; letter-spacing: -0.035em; }
 .home-brand { text-decoration: none; }
 .toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 0.65rem; }
-.worker-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
-.worker-nav .button-link { min-height: 38px; padding: 0.45rem 0.7rem; }
+.role-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
+.role-nav .button-link { min-height: 38px; padding: 0.45rem 0.7rem; }
 .worker-next-step { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 1rem; }
 .worker-next-step h3, .worker-next-step p { margin-bottom: 0.25rem; }
 .worker-next-link { color: #fff; background: var(--navy); }
@@ -339,7 +339,7 @@ textarea { min-height: 140px; resize: vertical; line-height: 1.55; }
   .app-shell { padding-inline: 0.85rem; }
   .topbar { position: static; }
   .toolbar { align-items: flex-start; gap: 0.6rem 0.8rem; }
-  .worker-nav { flex-basis: 100%; }
+  .role-nav { flex-basis: 100%; }
   .toolbar .toggle-inline { font-size: 0.76rem; }
   .metric-grid, .three-grid, .grid-two, .stage-grid { grid-template-columns: 1fr; }
   .stage-item { min-height: 46px; }

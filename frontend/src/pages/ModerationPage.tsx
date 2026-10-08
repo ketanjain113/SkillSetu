@@ -165,7 +165,13 @@ export default function ModerationPage({ token }: { token: string }) {
           <ul>{competencies.map((competency) => <li key={competency.id}>{competency.title}: final score {packet.moderation?.final_scores[competency.id]}/5</li>)}</ul>
         </section>
       ) : null}
-      {!loading && !queue.length ? <p className="state-message">No assessments are awaiting moderation.</p> : null}
+      {!loading && !queue.length ? (
+        <section className="card padded-card">
+          <h2>No assessments are awaiting moderation</h2>
+          <p>A request appears here after the primary assessor and assigned second assessor have both scored every competency and their scores differ by at least 2 points on any competency.</p>
+          <p className="micro-copy">To demonstrate the flow, submit a flagged or sampled assessment for independent review, then enter sufficiently different scores in the two assessor rounds.</p>
+        </section>
+      ) : null}
     </main>
   )
 }

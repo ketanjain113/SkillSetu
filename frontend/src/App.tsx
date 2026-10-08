@@ -104,10 +104,33 @@ function App() {
           </div>
           <div className="toolbar">
             {user?.role === 'worker' ? (
-              <nav className="worker-nav" aria-label="Worker journey">
+              <nav className="role-nav" aria-label="Worker journey">
                 <Link className="button-link" to="/worker/declare">Declare skills</Link>
                 <Link className="button-link" to="/worker/demonstrate">Demonstrate</Link>
                 <Link className="button-link" to="/worker/passport">My passport</Link>
+              </nav>
+            ) : null}
+            {user?.role === 'assessor' ? (
+              <nav className="role-nav" aria-label="Assessor workflow">
+                <Link className="button-link" to="/assessor/score">Reviews</Link>
+                <Link className="button-link" to="/calibration">Calibration</Link>
+                <Link className="button-link" to="/impact">Impact</Link>
+                <Link className="button-link" to="/certificate">Certificates</Link>
+              </nav>
+            ) : null}
+            {user?.role === 'moderator' ? (
+              <nav className="role-nav" aria-label="Moderator workflow">
+                <Link className="button-link" to="/moderation">Moderation queue</Link>
+                <Link className="button-link" to="/impact">Impact</Link>
+              </nav>
+            ) : null}
+            {user?.role === 'admin' ? (
+              <nav className="role-nav" aria-label="Administrator workflow">
+                <Link className="button-link" to="/assessor/score">Reviews</Link>
+                <Link className="button-link" to="/calibration">Calibration</Link>
+                <Link className="button-link" to="/impact">Impact</Link>
+                <Link className="button-link" to="/certificate">Certificates</Link>
+                <Link className="button-link" to="/admin/packs">Admin tools</Link>
               </nav>
             ) : null}
             <DemoRoleSwitcher currentRole={user?.role} currentUsername={user?.username} onSignIn={handleDemoSignIn} />

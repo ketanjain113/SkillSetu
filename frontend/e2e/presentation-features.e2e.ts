@@ -144,3 +144,18 @@ test('clicking the SkillSetu logo navigates home', async ({ page }) => {
   await expect(page).toHaveURL(/\/$/)
   await expect(page.getByRole('heading', { name: 'Assessment dashboard' })).toBeVisible()
 })
+
+test('shows review, moderation and certificate navigation for authorized roles', async ({ page }) => {
+  await browserLogin(page, 'assessor1', 'assessor123')
+  const assessorNav = page.getByRole('navigation', { name: 'Assessor workflow' })
+  await expect(assessorNav.getByRole('link', { name: 'Reviews' })).toBeVisible()
+  await expect(assessorNav.getByRole('link', { name: 'Certificates' })).toBeVisible()
+  await page.getByRole('button', { name: 'Logout' }).click()
+
+  await browserLogin(page, 'moderator1', 'moderator123', '/')
+  const moderatorNav = page.getByRole('navigation', { name: 'Moderator workflow' })
+  await expect(moderatorNav.getByRole('link', { name: 'Moderation queue' })).toBeVisible()
+  await moderatorNav.getByRole('link', { name: 'Moderation queue' }).click()
+  await expect(page.getByText(/assigned second assessor have both scored every competency/i)).toBeVisible()
+  await expect(moderatorNav.getByRole('link', { name: 'Certificates' })).toHaveCount(0)
+})
