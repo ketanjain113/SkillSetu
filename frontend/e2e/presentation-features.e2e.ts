@@ -128,3 +128,19 @@ test('gives workers visible navigation from declaration to Demonstrate', async (
   await expect(page).toHaveURL(/\/worker\/demonstrate$/)
   await expect(page.getByRole('heading', { name: 'Consent before capture' })).toBeVisible()
 })
+
+test('logs out to the public home page from a worker screen', async ({ page }) => {
+  await browserLogin(page, 'worker1', 'worker123', '/worker/declare')
+  await page.goto('/worker/demonstrate')
+  await page.getByRole('button', { name: 'Logout' }).click()
+  await expect(page).toHaveURL(/\/$/)
+  await expect(page.getByRole('button', { name: 'Sign in' })).toBeVisible()
+  await expect(page.getByRole('navigation', { name: 'Worker journey' })).toHaveCount(0)
+})
+
+test('clicking the SkillSetu logo navigates home', async ({ page }) => {
+  await browserLogin(page, 'worker1', 'worker123', '/worker/declare')
+  await page.getByRole('link', { name: 'SkillSetu home' }).click()
+  await expect(page).toHaveURL(/\/$/)
+  await expect(page.getByRole('heading', { name: 'Assessment dashboard' })).toBeVisible()
+})

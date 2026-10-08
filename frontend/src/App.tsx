@@ -1,5 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Link, Route, Routes, useNavigate } from 'react-router-dom'
 import { syncQueue } from './api/client'
 import { signInDemoRole, type DemoRole } from './api/demo'
 import type { AppUser } from './api/types'
@@ -21,6 +21,17 @@ import ModerationPage from './pages/ModerationPage'
 
 const CalibrationPage = lazy(() => import('./pages/CalibrationPage'))
 const ImpactDashboardPage = lazy(() => import('./pages/ImpactDashboardPage'))
+
+function LogoutButton({ onLogout }: { onLogout: () => void }) {
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    onLogout()
+    navigate('/')
+  }
+
+  return <button type="button" className="ghost-button" onClick={handleLogout}>Logout</button>
+}
 
 function App() {
   const [online, setOnline] = useState<boolean>(navigator.onLine)
@@ -86,7 +97,9 @@ function App() {
       <div className="app-shell">
         <header className="topbar">
           <div>
-            <strong>SkillSetu AI</strong>
+            <Link className="home-brand" to="/" aria-label="SkillSetu home">
+              <strong>SkillSetu AI</strong>
+            </Link>
             <span className="status-pill">{simulateOffline ? 'Offline demo' : online ? 'Online' : 'Offline'}</span>
           </div>
           <div className="toolbar">
@@ -124,7 +137,7 @@ function App() {
               {darkMode ? 'Light mode' : 'Dark mode'}
             </button>
             {user ? (
-              <button type="button" className="ghost-button" onClick={logout}>Logout</button>
+              <LogoutButton onLogout={logout} />
             ) : null}
           </div>
         </header>
