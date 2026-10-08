@@ -13,8 +13,8 @@ export default defineConfig({
       manifest: {
         name: 'SkillSetu AI',
         short_name: 'SkillSetu',
-        description: 'AI-assisted recognition of prior learning for domestic electrician assessment',
-        theme_color: '#0f766e',
+        description: 'Human-led recognition of prior learning assessment prototype',
+        theme_color: '#18408C',
         background_color: '#f8fafc',
         display: 'standalone',
         orientation: 'portrait',

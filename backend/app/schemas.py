@@ -1,6 +1,6 @@
 from typing import Any, List, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class Token(BaseModel):
@@ -48,12 +48,20 @@ class EvidenceMeta(BaseModel):
 
 
 class AssessmentScoreInput(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
     assessment_id: int
     competency_id: str
     score: int = Field(ge=1, le=5)
-    ai_draft: int = Field(ge=1, le=5)
     explanation: str
     override_reason: Optional[str] = None
+
+
+class ModerationDecisionInput(BaseModel):
+    assessment_id: int
+    rationale: str = Field(min_length=10)
+    final_scores: dict[str, int]
+    override_reasons: dict[str, str] = Field(default_factory=dict)
 
 
 class CalibrationMetric(BaseModel):

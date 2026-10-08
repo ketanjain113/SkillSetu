@@ -93,6 +93,7 @@ DEMO_CANDIDATE_CATALOG = [
 
 USERS = [
     {"username": "admin", "password": "admin123", "role": "admin", "full_name": "System Admin"},
+    {"username": "moderator1", "password": "moderator123", "role": "moderator", "full_name": "Demo Moderator"},
     *[
         {"username": f"assessor{index}", "password": "assessor123", "role": "assessor", "full_name": assessor_name}
         for index, assessor_name in enumerate(ASSESSOR_NAMES, start=1)

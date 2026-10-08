@@ -351,7 +351,7 @@ def lexical_similarity(query: str, candidate: str) -> float:
     if not query_tokens and not candidate_tokens:
         return 0.0
     overlap = query_tokens & candidate_tokens
-    return len(overlap) / max(len(query_tokens | candidate_tokens), 1)
+    return len(overlap) / max(len(query_tokens), 1)
 
 
 def match_nos_to_text(pack: Dict[str, Any], text: str) -> Dict[str, List[str]]:

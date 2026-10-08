@@ -128,18 +128,26 @@ def verify_verifiable_credential(credential_id: str) -> dict[str, Any]:
     credential = VC_REGISTRY.get(credential_id)
     if credential is None:
         return {"valid": False, "status": "not_found", "credential_id": credential_id, "hash_verified": False}
+    return verify_credential_document(credential)
 
+
+def verify_credential_document(credential: dict[str, Any]) -> dict[str, Any]:
+    credential_id = credential.get("id", "")
     proof = credential.get("proof")
-    if not proof or "proofValue" not in proof:
+    subject = credential.get("credentialSubject")
+    if not isinstance(proof, dict) or not isinstance(subject, dict) or "proofValue" not in proof:
         return {"valid": False, "status": "invalid_signature", "credential_id": credential_id, "hash_verified": False}
 
     signed_payload = {key: value for key, value in credential.items() if key != "proof"}
-    expected_hash = _hash_value({
-        "candidate_id": credential["credentialSubject"]["id"],
-        "trade": credential["credentialSubject"]["trade"],
-        "nsqf_level": credential["credentialSubject"]["nsqf_level"],
-    })
-    hash_verified = credential["credentialSubject"].get("hash_chain") == expected_hash
+    try:
+        expected_hash = _hash_value({
+            "candidate_id": subject["id"],
+            "trade": subject["trade"],
+            "nsqf_level": subject["nsqf_level"],
+        })
+        hash_verified = subject.get("hash_chain") == expected_hash
+    except KeyError:
+        hash_verified = False
 
     try:
         public_key = _load_public_key()
