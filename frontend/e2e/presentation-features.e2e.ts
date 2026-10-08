@@ -117,3 +117,14 @@ test('presents a signed QR certificate, impact charts and tamper detection', asy
   await expect(page.getByText(/Evidence #\d+: record_hash_mismatch/)).toBeVisible()
   await page.screenshot({ path: testInfo.outputPath('tamper-detection.png'), fullPage: true })
 })
+
+test('gives workers visible navigation from declaration to Demonstrate', async ({ page }) => {
+  await browserLogin(page, 'worker1', 'worker123', '/worker/declare')
+  await expect(page.getByRole('navigation', { name: 'Worker journey' }).getByRole('link', { name: 'Demonstrate' })).toBeVisible()
+  await page.getByRole('button', { name: 'Map to packs' }).click()
+  const continueLink = page.getByRole('link', { name: 'Continue to Demonstrate' })
+  await expect(continueLink).toBeVisible()
+  await continueLink.click()
+  await expect(page).toHaveURL(/\/worker\/demonstrate$/)
+  await expect(page.getByRole('heading', { name: 'Consent before capture' })).toBeVisible()
+})

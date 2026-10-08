@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { apiRequest } from '../api/client'
 import type { MatchResult } from '../api/types'
 import type { Locale } from '../i18n/translations'
@@ -56,6 +57,14 @@ export function WorkerDeclarePage({ token, locale, lowLiteracyMode }: { token: s
 
       {matches.length ? (
         <section className="stack">
+          <div className="card padded-card worker-next-step">
+            <div>
+              <p className="eyebrow">NEXT STEP</p>
+              <h3>Your declaration is saved. Continue to evidence.</h3>
+              <p className="micro-copy">Open Demonstrate to record or review evidence for this assessment.</p>
+            </div>
+            <Link className="button-link worker-next-link" to="/worker/demonstrate">Continue to Demonstrate</Link>
+          </div>
           {matches.map((match) => (
             <div key={match.pack_id} className="card padded-card">
               <div className="card-header-row">

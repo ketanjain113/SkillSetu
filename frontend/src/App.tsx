@@ -1,5 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from 'react'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import { syncQueue } from './api/client'
 import { signInDemoRole, type DemoRole } from './api/demo'
 import type { AppUser } from './api/types'
@@ -90,6 +90,13 @@ function App() {
             <span className="status-pill">{simulateOffline ? 'Offline demo' : online ? 'Online' : 'Offline'}</span>
           </div>
           <div className="toolbar">
+            {user?.role === 'worker' ? (
+              <nav className="worker-nav" aria-label="Worker journey">
+                <Link className="button-link" to="/worker/declare">Declare skills</Link>
+                <Link className="button-link" to="/worker/demonstrate">Demonstrate</Link>
+                <Link className="button-link" to="/worker/passport">My passport</Link>
+              </nav>
+            ) : null}
             <DemoRoleSwitcher currentRole={user?.role} currentUsername={user?.username} onSignIn={handleDemoSignIn} />
             <label className="toggle-inline compact-control">
               <span>{translations[locale].language}</span>
